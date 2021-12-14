@@ -51,6 +51,11 @@ public class TestCase {
 	    freq = myObject.frequency();
 	    assert freq == 0: "H, HH: " + freq;
 
+	    myObject.setSpace("".getBytes()); // 検索対象文字列が空の場合
+	    myObject.setTarget("H".getBytes());
+	    freq = myObject.frequency();
+	    assert freq == 0: ", H: " + freq;
+
 		myObject.setSpace("ひ ほ ひ ほ".getBytes()); // 日本語(全角文字列)の場合
 	    myObject.setTarget("ひ".getBytes());
 	    freq = myObject.frequency();
