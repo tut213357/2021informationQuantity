@@ -48,10 +48,8 @@ public class Frequencer implements FrequencerInterface {
 	    if(debugMode) { showVariables(); }
 
         // 検索対象の文字列から検索する文字列の数を数える
-        for(int start = 0; start < spaceLength; start++) { // Is it OK?
+        for(int start = 0; start < spaceLength - targetLength + 1; start++) { // Is it OK?
             boolean abort = false;
-
-            if (targetLength > spaceLength) {abort = true; break; } // ADD:
 
             for(int i = 0; i < targetLength; i++) {
                 if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
