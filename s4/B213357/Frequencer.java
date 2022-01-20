@@ -287,6 +287,11 @@ public class Frequencer implements FrequencerInterface{
         int posJ = j;
         int posK = k;
 
+        // 検索文字列が検索対象文字列より長い場合
+        if (mySpace.length < posK) {
+            return -1;
+        }
+
         // 最初に含んでいるか判定
         boolean isContain = true;
         for (int d = 0; d < (posK - posJ); d++) {
@@ -318,7 +323,7 @@ public class Frequencer implements FrequencerInterface{
 
             // どちらかの文字列が終端まで見終わった場合
             // 終端まで行った文字列を小さいとしてループを脱出
-            if(posI == mySpace.length || posJ == posK) {
+            if(posI == mySpace.length || posJ == posK - 1) {
                 if(posI > posJ) return 1;
                 if(posJ < posI) return -1;
             }		
@@ -419,7 +424,7 @@ public class Frequencer implements FrequencerInterface{
         Frequencer frequencerObject;
         try { 
             // suffixArrayの生成の確認テスト
-            // テストで推奨するmySpaceの文字
+            // テストで推奨する mySpaceの文字
             // "ABC", "CBA", "HHH", "Hi Ho Hi Ho".
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("ABC".getBytes());
@@ -454,28 +459,78 @@ public class Frequencer implements FrequencerInterface{
             //                                         
             // ****  Please write code to check subByteStartIndex, and subByteEndIndex
             //
-            frequencerObject.setTarget("Ho Ho Ho Ho".getBytes());
+            // subByteStartIndexのテスト
+            frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
+
+            frequencerObject.setTarget("Hi Ho Hi Ho".getBytes());
+
             int result = frequencerObject.subByteStartIndex(0, 2);
-            System.out.print("dddd = "+ result+" ");
-            if (result == 5) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            System.out.print("Start = "+ result+" ");
+            if (3 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 
-            result = frequencerObject.subByteStartIndex(0, 3);
-            System.out.print("dddd = "+ result+" ");
-            if (result == 6) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            result = frequencerObject.subByteStartIndex(3, 5);
+            System.out.print("Start = "+ result+" ");
+            if (5 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 
-            frequencerObject.setTarget("High_and_Low".getBytes());
+            result = frequencerObject.subByteStartIndex(0, 11);
+            System.out.print("Start = "+ result+" ");
+            if (4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            result = frequencerObject.subByteStartIndex(0, 0);
+            System.out.print("Start = "+ result+" ");
+            if (0 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            // subByteEndIndexのテスト
+            frequencerObject.setTarget("Hi Ho Hi Ho".getBytes());
+
             result = frequencerObject.subByteEndIndex(0, 2);
-            System.out.print("dddd = "+ result+" ");
-            if (result == 7) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            System.out.print("End = "+ result+" ");
+            if (5 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 
-            result = frequencerObject.subByteEndIndex(1, 2);
-            System.out.print("dddd = "+ result+" ");
-            if (result == 9) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            result = frequencerObject.subByteEndIndex(3, 5);
+            System.out.print("End = "+ result+" ");
+            if (7 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            result = frequencerObject.subByteStartIndex(0, 11);
+            System.out.print("End = "+ result+" ");
+            if (4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            result = frequencerObject.subByteEndIndex(0, 0);
+            System.out.print("End = "+ result+" ");
+            if (11 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            // frequencyのテスト
+            frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
 
             frequencerObject.setTarget("H".getBytes());
             result = frequencerObject.frequency();
             System.out.print("Freq = "+ result+" ");
             if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget("Hi".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(2 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget("Hi Ho Hi Ho ".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(0 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget("Hi Ho Hi Ho".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(1 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget(" ".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(3 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget("".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(11 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         }
         catch(Exception e) {
             System.out.println("STOP");
