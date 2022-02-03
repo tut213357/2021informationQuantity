@@ -99,7 +99,15 @@ public class Frequencer implements FrequencerInterface{
 
         // suffixArrayの前処理は、setSpaceで定義
         // space
-        mySpace = space; if(mySpace.length>0) spaceReady = true;
+        mySpace = space;
+
+        if(mySpace == null || mySpace.length == 0) {
+            spaceReady = false;
+            return;
+
+        }  else {
+            spaceReady = true;
+        }
 
         // First, create unsorted suffix array.
         suffixArray = new int[space.length];
@@ -194,7 +202,9 @@ public class Frequencer implements FrequencerInterface{
     // ここから始まり、指定する範囲までは変更してはならないコードである。
 
     public void setTarget(byte [] target) {
-        myTarget = target; if(myTarget.length>0) targetReady = true;
+        myTarget = target;
+        if(myTarget == null || myTarget.length == 0) targetReady = false;
+        else { targetReady = true;}
     }
 
 
@@ -315,13 +325,6 @@ public class Frequencer implements FrequencerInterface{
             // 終端まで行った文字列を小さいとしてループを脱出
             if (posI == mySpace.length) return -1;
             if (posJ == posK - 1) return 1;
-
-            /*
-            if(posI == mySpace.length || posJ == posK - 1) {
-                if(posI > posJ) return 1;
-                if(posJ < posI) return -1;
-            }
-            */
         }
     }
 
@@ -573,7 +576,24 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject.setTarget("".getBytes());
             result = frequencerObject.frequency();
             System.out.print("Freq = "+ result+" ");
-            if(11 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            if(-1 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setTarget(null);
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(-1 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setSpace("".getBytes());
+            frequencerObject.setTarget("Hi".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(0 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+
+            frequencerObject.setSpace(null);
+            frequencerObject.setTarget("Hi".getBytes());
+            result = frequencerObject.frequency();
+            System.out.print("Freq = "+ result+" ");
+            if(0 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         }
         catch(Exception e) {
             System.out.println("STOP");
