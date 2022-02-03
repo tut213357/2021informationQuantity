@@ -94,9 +94,6 @@ public class TestCase {
 			success = false;
 		}
 
-		// 処理前の時刻を取得
-		// long startTime = System.nanoTime();
-
 		try {
 			InformationEstimatorInterface myObject;
 			double value;
@@ -121,35 +118,45 @@ public class TestCase {
 			myObject.setTarget("00".getBytes());
 			value = myObject.estimation();
 			assert (value > 3.9999) && (4.0001 >value): "IQ for 00 in 3210321001230123 should be 3.0. But it returns "+value;
-		
+			
 			myObject.setTarget("".getBytes());
 			value = myObject.estimation();
-			assert (value > -0.0001) && (0.0001 >value): "IQ for  in 3210321001230123 should be 0.0. But it returns "+value;
+			assert (value == 0.0): "IQ for  in 3210321001230123 should be 0.0. But it returns "+value;
+
+			myObject.setTarget(null);
+			value = myObject.estimation();
+			assert (value == 0.0): "IQ for 00 in null should be 0. But it returns "+value;
 
 			myObject.setSpace("".getBytes());
 			myObject.setTarget("00".getBytes());
 			value = myObject.estimation();
 			assert (value == Double.MAX_VALUE): "IQ for 00 in should be Double.MAX_VALUE. But it returns "+value;
 
+			myObject.setSpace(null);
+			myObject.setTarget("00".getBytes());
+			value = myObject.estimation();
+			assert (value == Double.MAX_VALUE): "IQ for 00 in null should be Double.MAX_VALUE. But it returns "+value;
+			
+			// 処理前の時刻を取得
+			/*
+			long startTime = System.nanoTime();
 			myObject.setSpace("321032100123012332103210012301233210321001230123".getBytes());
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 100; i++) {
 				myObject.setTarget("321032100123012332103210012301233210321001230123".getBytes());
 				value = myObject.estimation();
 				// assert (value > 3.9999) && (4.0001 >value): "IQ for 00 in 3210321001230123 should be 3.0. But it returns "+value;
 			}
+			// 処理後の時刻を取得
+    		long endTime = System.nanoTime();
+			System.out.println("開始時刻:" + startTime + " ナノ秒");
+			System.out.println("終了時刻:" + endTime + " ナノ秒");
+			System.out.println("処理時間:" + (endTime - startTime) + " ナノ秒");*/
 		}
 		catch(Exception e) {
 			System.out.println("Exception occurred in InformationEstimator Object");
 			success = false;
 		}
         if(success) { System.out.println("TestCase OK"); } 
-
-		// 処理後の時刻を取得
-    	// long endTime = System.nanoTime();
-	
-		// System.out.println("開始時刻:" + startTime + " ナノ秒");
-		// System.out.println("終了時刻:" + endTime + " ナノ秒");
-		// System.out.println("処理時間:" + (endTime - startTime) + " ナノ秒");
     }
 }	    
 	    
