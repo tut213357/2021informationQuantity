@@ -348,18 +348,28 @@ public class Frequencer implements FrequencerInterface{
                 case 0:
                     // 複数見つかる時
                     if (isFirst) {
-                        while (targetCompare(i, start, end) == 0) {
-                            i -= 1;
-                            if (i < 0) { return i+1;}
+                        if (i == 0) {
+                            return i;
+
+                        } else if (targetCompare(i-1, start, end) != 0) {
+                            return i;
+
+                        } else {
+                            upperBound = i - 1;
+                            break;    
                         }
-                        return i+1;
 
                     } else {
-                        while (targetCompare(i, start, end) == 0) {
-                            i += 1;
-                            if (i > suffixArray.length - 1) { return i;}
-                        }
-                        return i;
+                        if (i == suffixArray.length - 1) {
+                            return i+1;
+
+                        } else if (targetCompare(i+1, start, end) != 0) {
+                            return i+1;
+
+                        } else {
+                            lowerBound = i + 1;
+                            break;
+                        } 
                     }
                 
                 case 1:

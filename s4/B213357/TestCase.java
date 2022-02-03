@@ -72,7 +72,7 @@ public class TestCase {
 			myObject.setSpace("Hi Ho Hi Ho".getBytes());
 			myObject.setTarget("".getBytes());
 			freq = myObject.frequency();
-			assert freq == 11: "Hi Ho Hi Ho, : " + freq;
+			assert freq == -1: "Hi Ho Hi Ho, : " + freq;
 
 			myObject.setSpace("H".getBytes()); // 検索文字列が検索対象文字列より長い場合
 			myObject.setTarget("HH".getBytes());
